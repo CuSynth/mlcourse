@@ -35,7 +35,7 @@ def TPR(probs, ground, threshold):
 
 def FPR(probs, ground, threshold):
     fp = FP(probs, ground, threshold)
-    tn=TN(probs, ground, threshold)
+    tn = TN(probs, ground, threshold)
     if fp == 0:
         return 0
     return fp/(fp+tn)
