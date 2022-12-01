@@ -4,11 +4,12 @@ from sklearn.utils.multiclass import unique_labels
 
 class PotentialClassifier:
 
-    def __init__(self, window_size, kernel_func=lambda x: 1 / (x + 1)):
+    def __init__(self, window_size, kernel_func=lambda x: 1. / (x + 1.) * (np.abs(x) <= 1), num_epoch=10):
         self.kernel_func = kernel_func
         self.window_size = window_size
+        self.num_epoch = num_epoch
 
-    def set_classifier_parameters(self, X, y):
+    def __set_classifier_parameters(self, X, y):
         self.X = X
         self.y = y
         self.classes_ = unique_labels(y)
@@ -16,17 +17,17 @@ class PotentialClassifier:
         # self.pots_count = len(self.pots)
 
     def __get_reference_samples(self):
-        self.pot_ids = (self.pots>0)
+        self.pot_ids = (self.pots > 0)
         self.X = self.X[self.pot_ids]
         self.y = self.y[self.pot_ids]
         self.pots = self.pots[self.pot_ids]
         self.pots_count = len(self.pots)
 
-    def fit(self, X, y, num_epoch=5):
+    def fit(self, X, y):
         X, y = check_X_y(X, y)
-        self.set_classifier_parameters(X, y)
+        self.__set_classifier_parameters(X, y)
 
-        for _ in range(num_epoch):
+        for _ in range(self.num_epoch):
             for i, x_sample in enumerate(self.X):
                 if self.predict(x_sample) != self.y[i]:
                     self.pots[i] += 1
@@ -58,7 +59,9 @@ class PotentialClassifier:
         return np.argmax(result_predictions, axis=-1)
 
     def get_params(self, deep=True):
-        return {"window_size": self.window_size, "kernel_func": self.kernel_func}
+        return {"window_size": self.window_size,
+                "kernel_func": self.kernel_func,
+                "num_epoch" : self.num_epoch}
 
     def set_params(self, **parameters):
         for parameter, value in parameters.items():
