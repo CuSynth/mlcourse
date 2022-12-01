@@ -191,3 +191,8 @@ fabric.properties
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+
+
+# Vscode workspace
+*.code-workspace
