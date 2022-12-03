@@ -196,3 +196,6 @@ fabric.properties
 
 # Vscode workspace
 *.code-workspace
+
+# mnist
+/task 3/data/
