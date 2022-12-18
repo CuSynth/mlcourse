@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
 
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 
@@ -35,7 +38,7 @@ def plot_errors(X: np.ndarray, y: np.ndarray, preds: np.ndarray, num_samples: in
 
     plt.suptitle("Wrong predictions of the classifier")
     for ax, img, label, gt in zip(axes, X_plot, preds_plot, gt_plot):
-        plot_image(ax, img, label=str(label), title=("gt: " + str(gt)))
+        plot_image(ax, img, label=str(gt), title=("gt: " + str(gt) + " pred: " + str(label)))
     
     plt.tight_layout()
     plt.show()
