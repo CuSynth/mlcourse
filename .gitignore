@@ -199,3 +199,9 @@ fabric.properties
 
 # mnist
 /task 3/data/
+
+# House pricing
+/task 4/data/
+
+# catboost
+*/*catboost*/
